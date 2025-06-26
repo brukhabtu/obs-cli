@@ -1,0 +1,10 @@
+{
+    "id": "obsidian-metadata-api",
+    "name": "Metadata API",
+    "version": "1.0.0",
+    "minAppVersion": "0.15.0",
+    "description": "Expose Obsidian metadata through HTTP API for external tools",
+    "author": "Your Name",
+    "authorUrl": "https://github.com/yourusername",
+    "isDesktopOnly": false
+}

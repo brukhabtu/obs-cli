@@ -1,3 +1,3 @@
-"""Obsidian CLI Tool - Command-line interface for Obsidian metadata."""
+"""Obsidian Dataview Query CLI."""
 
-__version__ = "0.1.0"
+__version__ = "2.0.0"

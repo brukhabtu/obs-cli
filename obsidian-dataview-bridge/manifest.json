@@ -1,0 +1,10 @@
+{
+    "id": "obsidian-dataview-bridge",
+    "name": "Obsidian Dataview Bridge",
+    "version": "2.0.0",
+    "minAppVersion": "0.15.0",
+    "description": "Execute Dataview queries through a JSON bridge for external tools",
+    "author": "Your Name",
+    "authorUrl": "https://github.com/yourusername",
+    "isDesktopOnly": false
+}

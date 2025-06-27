@@ -1,156 +1,95 @@
-# obs-cli
+# Obsidian DQuery
 
-A command-line interface for querying Obsidian vault metadata. Works with the Obsidian Metadata API plugin to provide powerful search and analysis capabilities from the terminal.
+Execute Dataview queries on Obsidian vaults from the command line.
 
 ## Features
 
-- 📝 **Notes**: List, search, and analyze notes
-- 🏷️ **Tags**: View tag usage and statistics  
-- 📁 **Folders**: Explore vault structure
-- ✅ **Tasks**: Track todos across your vault
-- 💻 **Code**: Analyze code blocks by language
-- 📊 **Stats**: Comprehensive vault statistics
-- 🔍 **Search**: Find orphaned notes, untagged content
-- 🔗 **Analysis**: Discover note clusters and relationships
+- Execute any Dataview query from the command line
+- Support for TABLE, LIST, TASK, and CALENDAR queries
+- Multiple output formats: table, JSON, CSV
+- Query caching for improved performance
+- Works with mobile Obsidian vaults
+- Comprehensive Dataview syntax help built-in
 
 ## Installation
 
-### Prerequisites
-
-- Python 3.12+
-- [uv](https://github.com/astral-sh/uv) package manager
-- Obsidian with the Metadata API plugin installed
-
-### Setup
-
-1. Clone the repository:
 ```bash
+# Clone the repository
 git clone https://github.com/yourusername/obs-cli.git
 cd obs-cli
-```
 
-2. Install dependencies with uv:
-```bash
+# Install with uv
 uv sync
-```
 
-3. Install the Obsidian plugin:
-   - Copy the `obsidian-metadata-api` folder to your vault's `.obsidian/plugins/` directory
-   - Enable the plugin in Obsidian settings
-   - Run "Rebuild Metadata Database" command in Obsidian
+# Install the Obsidian plugin
+cp -r obsidian-metadata-api /path/to/vault/.obsidian/plugins/
+```
 
 ## Usage
 
-### Basic Commands
-
 ```bash
-# List all notes
-uv run obs-cli --vault /path/to/vault notes list
+# Execute a simple query
+obs-dquery "TABLE file.name FROM #project"
 
-# Show vault statistics  
-uv run obs-cli --vault /path/to/vault stats vault
+# Use a different output format
+obs-dquery "LIST FROM #todo" --format json
 
-# List all tags
-uv run obs-cli --vault /path/to/vault tags list
+# Execute query from file
+obs-dquery --file queries/my-query.dql
 
-# Search for notes
-uv run obs-cli --vault /path/to/vault search notes "project"
+# Set default vault path
+export OBSIDIAN_VAULT="/path/to/vault"
+obs-dquery "TABLE file.mtime WHERE file.mtime >= date(today) - dur(7 days)"
 
-# Show folder structure
-uv run obs-cli --vault /path/to/vault folders tree
+# Show Dataview syntax help
+obs-dquery --help-syntax
 ```
 
-### Environment Variable
+## Query Examples
 
-Set the `OBSIDIAN_VAULT` environment variable to avoid specifying `--vault` each time:
+```sql
+-- Find all notes with a specific tag
+TABLE file.name, file.mtime FROM #project
 
-```bash
-export OBSIDIAN_VAULT="/path/to/your/vault"
-uv run obs-cli notes list
+-- List recent notes
+LIST FROM "" WHERE file.mtime >= date(today) - dur(7 days)
+
+-- Find incomplete tasks
+TASK FROM "" WHERE !completed
+
+-- Find notes with specific frontmatter
+TABLE file.name, rating FROM "" WHERE rating > 4
+
+-- Complex queries with multiple conditions
+TABLE file.name, file.size, file.tags 
+FROM "Projects" OR "Archive"
+WHERE contains(file.name, "2024") AND file.size > 1000
+SORT file.mtime DESC
 ```
 
-### Command Categories
+## Output Formats
 
-#### Notes Commands
-- `notes list` - List all notes with metadata
-- `notes recent` - Show recently modified notes
-- `notes largest` - Find largest notes
+- **table** (default): Rich formatted table output
+- **json**: Structured JSON output for processing
+- **csv**: CSV format for spreadsheet import
 
-#### Tags Commands  
-- `tags list` - List all tags with counts
-- `tags notes <tag>` - Find notes with specific tag
+## Requirements
 
-#### Search Commands
-- `search notes <query>` - Search note titles/paths
-- `search orphans` - Find notes without links
-- `search untagged` - Find notes without tags
-
-#### Tasks Commands
-- `tasks list` - Show all tasks
-- `tasks pending` - Show incomplete tasks only
-- `tasks by-note` - Group tasks by note
-
-#### Folders Commands
-- `folders tree` - Display folder hierarchy
-- `folders stats` - Show folder statistics
-
-#### Code Commands
-- `code stats` - Language statistics
-- `code notes` - Notes containing code
-- `code search <language>` - Find specific language blocks
-
-#### Stats Commands
-- `stats vault` - Overall vault statistics
-- `stats daily` - Daily note creation stats
-
-#### Analyze Commands
-- `analyze clusters` - Find linked note groups
-- `analyze embeds` - Analyze embedded content
-- `analyze graph` - Export graph data
-
-## Mobile Usage (Termux)
-
-The tool works great on Android with Termux:
-
-1. Install Termux from F-Droid
-2. Install Python and git: `pkg install python git`
-3. Follow installation steps above
-4. Point to your Obsidian vault in shared storage
-
-**Note**: On mobile, the Obsidian plugin requires manual database rebuilds. Use the Command Palette in Obsidian to run "Rebuild Metadata Database" after making changes.
+- Python 3.12+
+- Obsidian with the Obsidian Metadata API plugin installed
+- The Dataview plugin is recommended for query validation
 
 ## Development
 
-### Project Structure
-
-```
-obs-cli/
-├── obs_cli/
-│   ├── cli.py              # Main CLI entry point
-│   ├── database_client.py  # Database reader
-│   └── commands/           # Command modules
-├── obsidian-metadata-api/  # Obsidian plugin
-│   ├── main.ts            # Plugin entry point
-│   └── src/
-│       ├── database.ts    # Database writer
-│       └── settings.ts    # Plugin settings
-└── pyproject.toml         # Project configuration
-```
-
-### Running Tests
-
 ```bash
+# Run tests
 uv run pytest
+
+# Build the Obsidian plugin
+cd obsidian-metadata-api
+npm install
+npm run build
 ```
-
-## Architecture
-
-The system consists of two parts:
-
-1. **Obsidian Plugin**: Monitors vault changes and writes metadata to a JSON database
-2. **CLI Tool**: Reads the database and provides query capabilities
-
-This approach works on all platforms including mobile Obsidian where HTTP servers aren't supported.
 
 ## License
 

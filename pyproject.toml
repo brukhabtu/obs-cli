@@ -1,16 +1,17 @@
 [project]
-name = "obs-cli"
-version = "0.1.0"
-description = "Command-line interface for Obsidian metadata"
+name = "obsidian-dquery"
+version = "2.0.0"
+description = "Execute Dataview queries on Obsidian vaults from the command line"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "click>=8.2.1",
     "rich>=14.0.0",
+    "pyyaml>=6.0",
 ]
 
 [project.scripts]
-obs-cli = "obs_cli.cli:cli"
+obs-dquery = "obs_cli.dquery:dquery"
 
 [dependency-groups]
 dev = [

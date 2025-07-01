@@ -8,6 +8,7 @@ import io
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 from obs_cli.dataview_client import DataviewClient
+from obs_cli.install import install_plugin
 from rich.console import Console
 from rich.table import Table
 from obs_cli import __version__
@@ -118,8 +119,9 @@ def format_dataview_results(results, format_type, no_color):
         else:
             return f"Query failed: {results.get('error', 'Unknown error')}"
     
-    query_type = results.get('type', 'unknown').upper()
-    data = results.get('data', [])
+    result_data = results.get('result', {})
+    query_type = result_data.get('type', 'unknown').upper()
+    data = result_data.get('values', [])
     
     if format_type == "json":
         return json.dumps(results, indent=2, default=str)
@@ -185,7 +187,11 @@ def format_dataview_results(results, format_type, no_color):
     elif query_type == 'LIST':
         for item in data:
             if isinstance(item, dict):
-                value = item.get('file', item.get('page', str(item)))
+                # Handle Dataview Link objects
+                if 'path' in item:
+                    value = item['path']
+                else:
+                    value = item.get('file', item.get('page', str(item)))
                 output_lines.append(f"• {value}")
             else:
                 output_lines.append(f"• {item}")
@@ -211,8 +217,23 @@ def format_dataview_results(results, format_type, no_color):
     return '\n'.join(output_lines)
 
 
-@click.command()
-@click.version_option(version=__version__, prog_name="obs-dquery")
+@click.group()
+@click.version_option(version=__version__, prog_name="obs")
+def cli():
+    """Obsidian CLI for executing Dataview queries and managing plugins.
+    
+    Examples:
+    
+        obs query "TABLE file.name FROM #project"
+        
+        obs query "LIST WHERE contains(tags, 'work')"
+        
+        obs install-plugin /path/to/vault
+    """
+    pass
+
+
+@cli.command()
 @click.argument("query", required=False)
 @click.option("--vault", "-v", type=click.Path(), envvar="OBSIDIAN_VAULT", 
               help="Path to Obsidian vault")
@@ -222,23 +243,10 @@ def format_dataview_results(results, format_type, no_color):
               help="Execute query from file")
 @click.option("--help-syntax", is_flag=True, 
               help="Show Dataview syntax help")
-@click.option("--no-cache", is_flag=True, 
-              help="Don't use cached results")
 @click.option("--no-color", is_flag=True, 
               help="Disable colored output")
-def dquery(query, vault, format, file, help_syntax, no_cache, no_color):
-    """Execute Dataview queries on your Obsidian vault.
-    
-    Examples:
-    
-        obs-dquery "TABLE file.name FROM #project"
-        
-        obs-dquery "LIST WHERE contains(tags, 'work')"
-        
-        obs-dquery --file queries/my-query.dql
-        
-        obs-dquery --help-syntax
-    """
+def query(query, vault, format, file, help_syntax, no_color):
+    """Execute a Dataview query on your Obsidian vault."""
     # Show syntax help if requested
     if help_syntax:
         console.print(DATAVIEW_SYNTAX_HELP)
@@ -258,7 +266,7 @@ def dquery(query, vault, format, file, help_syntax, no_cache, no_color):
         client = DataviewClient(vault_path=vault)
         
         # Execute the query
-        results = client.execute_dataview_query(query, use_cache=not no_cache)
+        results = client.execute_dataview_query(query)
         
         if results is None:
             console.print("[yellow]Warning:[/yellow] Dataview plugin not installed or query execution failed")
@@ -284,5 +292,15 @@ def dquery(query, vault, format, file, help_syntax, no_cache, no_color):
         sys.exit(1)
 
 
+@cli.command("install-plugin")
+@click.argument("vault", type=click.Path())
+def install_plugin_cmd(vault):
+    """Install the Obsidian Dataview Bridge plugin to a vault."""
+    if install_plugin(vault):
+        sys.exit(0)
+    else:
+        sys.exit(1)
+
+
 if __name__ == "__main__":
-    dquery()
+    cli()

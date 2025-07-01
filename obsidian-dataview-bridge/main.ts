@@ -69,7 +69,7 @@ export default class DataviewBridgePlugin extends Plugin {
     
     getDbPath(): string {
         // Store database in plugin folder
-        return this.app.vault.configDir + '/plugins/obsidian-metadata-api/metadata.json';
+        return this.app.vault.configDir + '/plugins/obsidian-dataview-bridge/metadata.json';
     }
     
     async loadSettings() {

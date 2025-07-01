@@ -28,7 +28,7 @@ class DataviewClient:
             else:
                 raise ValueError("Could not auto-detect vault path. Please provide vault_path.")
         
-        self.db_path = self.vault_path / ".obsidian/plugins/obsidian-metadata-api/metadata.json"
+        self.db_path = self.vault_path / ".obsidian/plugins/obsidian-dataview-bridge/metadata.json"
         
     def _read_database(self) -> Dict[str, Any]:
         """Read the database file."""
@@ -55,7 +55,7 @@ class DataviewClient:
             
         return stats
     
-    def execute_dataview_query(self, query: str, use_cache: bool = True) -> Optional[Dict[str, Any]]:
+    def execute_dataview_query(self, query: str) -> Optional[Dict[str, Any]]:
         """Execute a Dataview query and return results.
         
         This method writes the query to a special location in the database
@@ -63,7 +63,6 @@ class DataviewClient:
         
         Args:
             query: The Dataview query to execute
-            use_cache: Whether to use cached results if available
             
         Returns:
             Dictionary with query results or None if Dataview is not available
@@ -88,22 +87,8 @@ class DataviewClient:
             if not db.get('dataviewAvailable', False):
                 return None
         
-        # Generate query ID
-        query_id = hashlib.sha256(query.encode()).hexdigest()[:16]
-        
-        # Check cache if requested
-        if use_cache:
-            cached = db.get('dataviewQueries', {}).get(query_id)
-            if cached and cached.get('status') == 'success':
-                # Check if cache is still fresh (within 1 hour)
-                try:
-                    cached_time = datetime.fromisoformat(cached['timestamp'].replace('Z', '+00:00'))
-                    now = datetime.now(cached_time.tzinfo) if cached_time.tzinfo else datetime.now()
-                    if (now - cached_time).total_seconds() < 3600:
-                        return cached
-                except:
-                    # If timestamp parsing fails, ignore cache
-                    pass
+        # Generate unique query ID for this execution
+        query_id = hashlib.sha256(f"{query}_{time.time()}".encode()).hexdigest()[:16]
         
         # Submit query for execution
         if 'dataviewQueries' not in db:

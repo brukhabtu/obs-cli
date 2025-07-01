@@ -11,7 +11,7 @@ dependencies = [
 ]
 
 [project.scripts]
-obs-dquery = "obs_cli.dquery:dquery"
+obs = "obs_cli.dquery:cli"
 
 [dependency-groups]
 dev = [

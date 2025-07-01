@@ -151,17 +151,18 @@ export class DataviewQueryBridge implements DataviewBridge {
                 const result = await dv.query(query);
                 
                 if (result.successful) {
-                    // Store the raw result
+                    // Store the raw result - data is in result.value
+                    const queryResult = result.value;
                     db.dataviewQueries[queryId] = {
                         query: query,
                         status: 'success',
                         result: {
-                            type: result.type,
-                            headers: result.headers || [],
-                            values: result.values || [],
+                            type: queryResult.type,
+                            headers: queryResult.headers || [],
+                            values: queryResult.values || [],
                             // Store additional metadata if available
-                            ...(result.type === 'table' && {
-                                columnTypes: result.columnTypes || []
+                            ...(queryResult.type === 'table' && {
+                                columnTypes: queryResult.columnTypes || []
                             })
                         },
                         timestamp: new Date().toISOString()

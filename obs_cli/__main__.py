@@ -1,6 +1,6 @@
-"""Entry point for the obsidian-dquery command."""
+"""Entry point for the obs command."""
 
-from obs_cli.dquery import dquery
+from obs_cli.dquery import cli
 
 if __name__ == "__main__":
-    dquery()
+    cli()

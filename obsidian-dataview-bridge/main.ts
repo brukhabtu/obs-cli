@@ -25,7 +25,6 @@ export default class DataviewBridgePlugin extends Plugin {
             // Also listen for dataview to be ready
             this.registerEvent(
                 this.app.metadataCache.on('dataview:index-ready' as any, () => {
-                    console.log('Dataview index ready!');
                     this.database.checkDataviewAvailability();
                 })
             );
@@ -39,8 +38,6 @@ export default class DataviewBridgePlugin extends Plugin {
                 const dv = (this.app as any).plugins?.plugins?.dataview;
                 if (dv) {
                     new Notice(`Dataview found! API available: ${!!dv.api}`);
-                    console.log('Dataview plugin:', dv);
-                    console.log('Dataview API:', dv.api);
                 } else {
                     new Notice('Dataview not found');
                 }

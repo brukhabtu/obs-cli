@@ -74,7 +74,6 @@ export class DataviewQueryBridge implements DataviewBridge {
         
         // Also do an initial availability check after a delay
         setTimeout(async () => {
-            console.log('Performing initial Dataview availability check...');
             await this.checkDataviewAvailability();
         }, 2000);
         
@@ -88,12 +87,6 @@ export class DataviewQueryBridge implements DataviewBridge {
         // Check if Dataview plugin is available and enabled
         const dataviewPlugin = (this.app as any).plugins?.plugins?.dataview;
         const isAvailable = !!(dataviewPlugin && dataviewPlugin.api);
-        
-        if (isAvailable) {
-            console.log('Dataview plugin detected and API available');
-        } else {
-            console.log('Dataview plugin not found or API not available');
-        }
         
         db.dataviewAvailable = isAvailable;
         db.lastChecked = new Date().toISOString();

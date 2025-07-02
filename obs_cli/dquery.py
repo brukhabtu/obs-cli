@@ -5,15 +5,18 @@ import json
 import sys
 import csv
 import io
+import logging
 from pathlib import Path
 from typing import Optional, List, Dict, Any
-from obs_cli.dataview_client import DataviewClient
+from obs_cli.core.dataview import DataviewClient
 from obs_cli.install import install_plugin
+from obs_cli.logging import setup_logging
 from rich.console import Console
 from rich.table import Table
 from obs_cli import __version__
 
 console = Console()
+logger = logging.getLogger(__name__)
 
 
 def format_csv(data: List[Dict[str, Any]], headers: Optional[List[str]] = None) -> str:
@@ -219,7 +222,9 @@ def format_dataview_results(results, format_type, no_color):
 
 @click.group()
 @click.version_option(version=__version__, prog_name="obs")
-def cli():
+@click.option("--debug", is_flag=True, help="Enable debug logging", hidden=True)
+@click.pass_context
+def cli(ctx, debug):
     """Obsidian CLI for executing Dataview queries and managing plugins.
     
     Examples:
@@ -230,7 +235,13 @@ def cli():
         
         obs install-plugin /path/to/vault
     """
-    pass
+    # Set up logging for the entire CLI
+    log_level = "DEBUG" if debug else "WARNING"
+    setup_logging(level=log_level)
+    
+    # Store debug flag in context for subcommands
+    ctx.ensure_object(dict)
+    ctx.obj['debug'] = debug
 
 
 @cli.command()
@@ -300,6 +311,24 @@ def install_plugin_cmd(vault):
         sys.exit(0)
     else:
         sys.exit(1)
+
+
+@cli.command()
+@click.option("--vault", "-v", type=click.Path(), envvar="OBSIDIAN_VAULT", 
+              help="Path to Obsidian vault")
+@click.option("--config", "-c", type=click.Path(exists=True), 
+              help="Path to validation config file")
+@click.option("--debug", is_flag=True, help="Enable debug mode")
+@click.option("--verbose", is_flag=True, help="Enable verbose output")
+def validate(vault, config, debug, verbose):
+    """Validate vault content against rules defined in config file.
+    
+    Looks for .obs-validate.yaml or .obs-validate.toml in vault root by default.
+    """
+    from obs_cli.cli.lint_command import lint_command
+    
+    # Use the new lint command implementation
+    lint_command(vault=vault, config=config, debug=debug, verbose=verbose)
 
 
 if __name__ == "__main__":

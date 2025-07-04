@@ -4,6 +4,7 @@ import tomllib
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
+from obs_cli.core.constants import CONFIG_FILE_NAMES, SEVERITY_LEVELS
 from obs_cli.logging import get_logger
 
 logger = get_logger(__name__)
@@ -86,7 +87,7 @@ class ConfigLoader:
             return path
         
         # 2. Check current directory
-        for filename in [".obs-validate.yaml", ".obs-validate.toml"]:
+        for filename in CONFIG_FILE_NAMES:
             path = Path.cwd() / filename
             logger.debug(f"Checking current directory for {filename}: {path}")
             if path.exists():
@@ -95,7 +96,7 @@ class ConfigLoader:
         
         # 3. Check vault root if available
         if vault_path:
-            for filename in [".obs-validate.yaml", ".obs-validate.toml"]:
+            for filename in CONFIG_FILE_NAMES:
                 path = vault_path / filename
                 logger.debug(f"Checking vault root for {filename}: {path}")
                 if path.exists():
@@ -202,8 +203,8 @@ class ConfigLoader:
             case {"name": name} if not isinstance(name, str) or not name.strip():
                 raise ValidationError(f"Rule {index}: 'name' must be a non-empty string")
                 
-            case {"severity": severity} if severity not in ["error", "warning", "info"]:
-                raise ValidationError(f"Rule {index}: 'severity' must be 'error', 'warning', or 'info', got '{severity}'")
+            case {"severity": severity} if severity not in SEVERITY_LEVELS:
+                raise ValidationError(f"Rule {index}: 'severity' must be one of {SEVERITY_LEVELS}, got '{severity}'")
                 
             case {"query": query} if not isinstance(query, str) or not query.strip():
                 raise ValidationError(f"Rule {index}: 'query' must be a non-empty string")

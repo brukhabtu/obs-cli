@@ -8,13 +8,10 @@ from obs_cli.core.models import LintRule, LintResult, LintReport, Severity, Quer
 from obs_cli.core.dataview import DataviewClient
 from obs_cli.core.config import ConfigLoader, ValidationConfig, ValidationError
 from obs_cli.core.templates import TemplateProcessor
+from obs_cli.core.constants import DEFAULT_QUERY_TIMEOUT, MAX_RESULT_DISPLAY_LENGTH
 from obs_cli.logging import get_logger
 
 logger = get_logger(__name__)
-
-# Constants
-DEFAULT_QUERY_TIMEOUT = 30000  # milliseconds
-MAX_RESULT_DISPLAY_LENGTH = 500  # characters
 
 
 class VaultLinter:

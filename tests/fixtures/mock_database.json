@@ -1,0 +1,275 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2024-01-20T12:00:00.000Z",
+  "settings": {
+    "enableAutoUpdate": true,
+    "updateInterval": 5000,
+    "includeArchived": false
+  },
+  "notes": {
+    "Daily Notes/2024-01-15.md": {
+      "path": "Daily Notes/2024-01-15.md",
+      "basename": "2024-01-15",
+      "extension": "md",
+      "created": "2024-01-15T09:00:00.000Z",
+      "modified": "2024-01-15T17:30:00.000Z",
+      "size": 1234,
+      "tags": ["daily", "work", "meeting"],
+      "frontmatter": {
+        "date": "2024-01-15",
+        "type": "daily-note",
+        "mood": "productive",
+        "weather": "sunny"
+      },
+      "links": ["Projects/Project Alpha.md", "People/John Doe.md"],
+      "backlinks": ["Weekly Review 2024-W03.md"],
+      "embeds": ["attachments/meeting-notes.png"],
+      "tasks": [
+        {
+          "text": "Review PR #123",
+          "completed": true,
+          "line": 10
+        },
+        {
+          "text": "Call client about requirements",
+          "completed": false,
+          "line": 12
+        }
+      ]
+    },
+    "Projects/Project Alpha.md": {
+      "path": "Projects/Project Alpha.md",
+      "basename": "Project Alpha",
+      "extension": "md",
+      "created": "2024-01-01T10:00:00.000Z",
+      "modified": "2024-01-20T14:15:00.000Z",
+      "size": 5678,
+      "tags": ["project", "active", "python", "priority/high"],
+      "frontmatter": {
+        "status": "in-progress",
+        "priority": "high",
+        "due": "2024-02-15",
+        "team": ["John Doe", "Jane Smith"],
+        "budget": 50000,
+        "completion": 65
+      },
+      "links": ["Resources/Python Guide.md", "People/John Doe.md", "People/Jane Smith.md"],
+      "backlinks": ["Daily Notes/2024-01-15.md", "Projects/Project Overview.md"],
+      "embeds": ["diagrams/architecture.svg"],
+      "tasks": [
+        {
+          "text": "Complete API design",
+          "completed": true,
+          "line": 25
+        },
+        {
+          "text": "Write unit tests",
+          "completed": false,
+          "line": 27
+        },
+        {
+          "text": "Deploy to staging",
+          "completed": false,
+          "line": 29
+        }
+      ]
+    },
+    "People/John Doe.md": {
+      "path": "People/John Doe.md",
+      "basename": "John Doe",
+      "extension": "md",
+      "created": "2023-12-01T11:00:00.000Z",
+      "modified": "2024-01-10T16:20:00.000Z",
+      "size": 890,
+      "tags": ["person", "team", "developer", "senior"],
+      "frontmatter": {
+        "role": "Senior Developer",
+        "email": "john.doe@example.com",
+        "phone": "+1-555-0123",
+        "skills": ["Python", "TypeScript", "Docker", "AWS"],
+        "department": "Engineering",
+        "manager": "Alice Manager"
+      },
+      "links": ["Projects/Project Alpha.md", "Projects/Project Beta.md"],
+      "backlinks": ["Daily Notes/2024-01-15.md", "Projects/Project Alpha.md", "Team/Engineering.md"],
+      "embeds": ["attachments/profile-pic.jpg"],
+      "tasks": []
+    },
+    "Resources/Python Guide.md": {
+      "path": "Resources/Python Guide.md",
+      "basename": "Python Guide",
+      "extension": "md",
+      "created": "2023-11-15T09:30:00.000Z",
+      "modified": "2024-01-05T11:45:00.000Z",
+      "size": 12345,
+      "tags": ["resource", "python", "guide", "reference", "programming"],
+      "frontmatter": {
+        "type": "guide",
+        "language": "python",
+        "version": "3.11",
+        "topics": ["async", "testing", "packaging", "type-hints"],
+        "author": "Tech Team",
+        "reviewed": true
+      },
+      "links": ["Resources/Testing Best Practices.md", "Resources/Async Programming.md", "Tools/pytest.md"],
+      "backlinks": ["Projects/Project Alpha.md", "Learning/Python Notes.md", "Resources/Index.md"],
+      "embeds": ["code-snippets/async-example.py"],
+      "codeBlocks": [
+        {
+          "language": "python",
+          "line": 45,
+          "content": "def example():\n    return 'Hello, World!'"
+        },
+        {
+          "language": "python",
+          "line": 120,
+          "content": "async def fetch_data():\n    async with aiohttp.ClientSession() as session:\n        return await session.get(url)"
+        },
+        {
+          "language": "bash",
+          "line": 200,
+          "content": "pip install -r requirements.txt"
+        }
+      ]
+    },
+    "Archive/Old Project.md": {
+      "path": "Archive/Old Project.md",
+      "basename": "Old Project",
+      "extension": "md",
+      "created": "2023-06-01T10:00:00.000Z",
+      "modified": "2023-10-15T15:30:00.000Z",
+      "size": 3456,
+      "tags": ["project", "archived", "completed", "2023"],
+      "frontmatter": {
+        "status": "completed",
+        "completed_date": "2023-10-15",
+        "outcome": "successful",
+        "lessons_learned": 5,
+        "roi": 2.5
+      },
+      "links": ["Archive/Lessons Learned.md", "Archive/Project Retrospective.md"],
+      "backlinks": ["Year Review 2023.md", "Archive/Index.md"],
+      "embeds": [],
+      "tasks": []
+    },
+    "Templates/Meeting Template.md": {
+      "path": "Templates/Meeting Template.md",
+      "basename": "Meeting Template",
+      "extension": "md",
+      "created": "2023-10-01T08:00:00.000Z",
+      "modified": "2023-12-20T10:30:00.000Z",
+      "size": 567,
+      "tags": ["template", "meeting"],
+      "frontmatter": {
+        "type": "template",
+        "template_type": "meeting",
+        "version": 2
+      },
+      "links": [],
+      "backlinks": ["Templates/Index.md", "Workflows/Meeting Process.md"],
+      "embeds": [],
+      "tasks": []
+    },
+    "Learning/TypeScript Notes.md": {
+      "path": "Learning/TypeScript Notes.md",
+      "basename": "TypeScript Notes",
+      "extension": "md",
+      "created": "2023-12-15T14:00:00.000Z",
+      "modified": "2024-01-18T09:45:00.000Z",
+      "size": 8901,
+      "tags": ["learning", "typescript", "javascript", "programming", "notes"],
+      "frontmatter": {
+        "progress": 75,
+        "difficulty": "intermediate",
+        "resources": ["TypeScript Handbook", "Effective TypeScript"],
+        "next_topic": "Generics"
+      },
+      "links": ["Resources/TypeScript Guide.md", "Projects/Frontend Refactor.md"],
+      "backlinks": ["Learning/Index.md", "People/John Doe.md"],
+      "embeds": [],
+      "codeBlocks": [
+        {
+          "language": "typescript",
+          "line": 50,
+          "content": "interface User {\n  id: number;\n  name: string;\n  email?: string;\n}"
+        },
+        {
+          "language": "typescript",
+          "line": 150,
+          "content": "type Result<T> = { success: true; data: T } | { success: false; error: string };"
+        }
+      ]
+    }
+  },
+  "tags": {
+    "daily": 1,
+    "work": 1,
+    "meeting": 2,
+    "project": 2,
+    "active": 1,
+    "python": 2,
+    "priority/high": 1,
+    "person": 1,
+    "team": 1,
+    "developer": 1,
+    "senior": 1,
+    "resource": 1,
+    "guide": 1,
+    "reference": 1,
+    "programming": 2,
+    "archived": 1,
+    "completed": 1,
+    "2023": 1,
+    "template": 1,
+    "learning": 1,
+    "typescript": 1,
+    "javascript": 1,
+    "notes": 1
+  },
+  "links": {
+    "Daily Notes/2024-01-15.md": ["Projects/Project Alpha.md", "People/John Doe.md"],
+    "Projects/Project Alpha.md": ["Resources/Python Guide.md", "People/John Doe.md", "People/Jane Smith.md"],
+    "People/John Doe.md": ["Projects/Project Alpha.md", "Projects/Project Beta.md"],
+    "Resources/Python Guide.md": ["Resources/Testing Best Practices.md", "Resources/Async Programming.md", "Tools/pytest.md"],
+    "Archive/Old Project.md": ["Archive/Lessons Learned.md", "Archive/Project Retrospective.md"],
+    "Learning/TypeScript Notes.md": ["Resources/TypeScript Guide.md", "Projects/Frontend Refactor.md"]
+  },
+  "tasks": [
+    {
+      "path": "Daily Notes/2024-01-15.md",
+      "text": "Review PR #123",
+      "completed": true,
+      "line": 10
+    },
+    {
+      "path": "Daily Notes/2024-01-15.md",
+      "text": "Call client about requirements",
+      "completed": false,
+      "line": 12
+    },
+    {
+      "path": "Projects/Project Alpha.md",
+      "text": "Complete API design",
+      "completed": true,
+      "line": 25
+    },
+    {
+      "path": "Projects/Project Alpha.md",
+      "text": "Write unit tests",
+      "completed": false,
+      "line": 27
+    },
+    {
+      "path": "Projects/Project Alpha.md",
+      "text": "Deploy to staging",
+      "completed": false,
+      "line": 29
+    }
+  ],
+  "codeBlocks": {
+    "python": 2,
+    "bash": 1,
+    "typescript": 2,
+    "javascript": 0
+  }
+}

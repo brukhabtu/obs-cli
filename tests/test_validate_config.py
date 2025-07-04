@@ -136,7 +136,7 @@ class TestValidateConfig:
             ]
         }
         
-        with pytest.raises(ValidationError, match="Rule 0: 'severity' must be 'error', 'warning', or 'info', got 'critical'"):
+        with pytest.raises(ValidationError, match=r"Rule 0: 'severity' must be one of \['error', 'warning', 'info'\], got 'critical'"):
             ConfigLoader._validate_config(config)
     
     def test_rule_empty_name(self):

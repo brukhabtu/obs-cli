@@ -1,0 +1,426 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2024-01-20T12:00:00.000Z",
+  "settings": {
+    "enableAutoUpdate": true,
+    "updateInterval": 5000
+  },
+  "notes": {
+    "note1.md": {
+      "path": "note1.md",
+      "basename": "note1",
+      "extension": "md",
+      "created": "2024-01-15T09:00:00.000Z",
+      "modified": "2024-01-15T17:30:00.000Z",
+      "size": 1456,
+      "tags": ["daily", "work", "meeting", "daily-review"],
+      "frontmatter": {
+        "date": "2024-01-15",
+        "type": "daily-note",
+        "mood": "productive",
+        "weather": "sunny",
+        "tags": ["daily", "work"]
+      },
+      "links": ["Projects/Project Alpha", "People/John Doe", "Resources/Meeting Templates"],
+      "backlinks": [],
+      "embeds": ["attachments/meeting-notes.png"],
+      "tasks": [
+        {
+          "text": "Morning meditation",
+          "completed": true,
+          "line": 13
+        },
+        {
+          "text": "Review calendar",
+          "completed": true,
+          "line": 14
+        },
+        {
+          "text": "Check emails",
+          "completed": true,
+          "line": 15
+        },
+        {
+          "text": "Review PR #123",
+          "completed": true,
+          "line": 18
+        },
+        {
+          "text": "Call client about requirements",
+          "completed": false,
+          "line": 19
+        },
+        {
+          "text": "Update project documentation",
+          "completed": false,
+          "line": 20
+        },
+        {
+          "text": "Prepare weekly report",
+          "completed": false,
+          "line": 21
+        },
+        {
+          "text": "Review requirements document",
+          "completed": false,
+          "line": 36
+        },
+        {
+          "text": "Prepare questions about scope",
+          "completed": false,
+          "line": 37
+        },
+        {
+          "text": "Confirm budget constraints",
+          "completed": false,
+          "line": 38
+        }
+      ],
+      "codeBlocks": [
+        {
+          "language": "python",
+          "line": 51,
+          "content": "# Quick script to check API endpoints\nimport requests\n\ndef check_endpoints():\n    endpoints = ['/api/users', '/api/projects', '/api/tasks']\n    for endpoint in endpoints:\n        response = requests.get(f\"http://localhost:8000{endpoint}\")\n        print(f\"{endpoint}: {response.status_code}\")"
+        }
+      ]
+    },
+    "note2.md": {
+      "path": "note2.md",
+      "basename": "note2",
+      "extension": "md",
+      "created": "2024-01-01T10:00:00.000Z",
+      "modified": "2024-01-20T14:15:00.000Z",
+      "size": 3245,
+      "tags": ["project", "active", "python", "priority/high", "project-management", "roadmap"],
+      "frontmatter": {
+        "project": "Project Alpha",
+        "status": "in-progress",
+        "priority": "high",
+        "due": "2024-02-15",
+        "team": ["John Doe", "Jane Smith", "Bob Wilson"],
+        "budget": 50000,
+        "completion": 65,
+        "created": "2024-01-01",
+        "modified": "2024-01-20",
+        "tags": ["project", "active", "python"]
+      },
+      "links": [
+        "John Doe",
+        "Jane Smith",
+        "Bob Wilson",
+        "Resources/Python Guide",
+        "Meetings/2024-01-15 Project Sync",
+        "Meetings/2024-01-08 Architecture Review",
+        "Meetings/2024-01-01 Kickoff Meeting",
+        "Resources/API Design Guidelines",
+        "Resources/Python Best Practices",
+        "Resources/Testing Strategy",
+        "Projects/Project Beta",
+        "Projects/Legacy System Migration"
+      ],
+      "backlinks": ["note1.md"],
+      "embeds": [],
+      "tasks": [
+        {
+          "text": "Requirements gathering",
+          "completed": true,
+          "line": 35
+        },
+        {
+          "text": "Technical design document",
+          "completed": true,
+          "line": 36
+        },
+        {
+          "text": "Architecture review",
+          "completed": true,
+          "line": 37
+        },
+        {
+          "text": "Setup development environment",
+          "completed": true,
+          "line": 40
+        },
+        {
+          "text": "Database schema design",
+          "completed": true,
+          "line": 41
+        },
+        {
+          "text": "Complete API design",
+          "completed": true,
+          "line": 42
+        },
+        {
+          "text": "Write unit tests",
+          "completed": false,
+          "line": 43
+        },
+        {
+          "text": "Implement core features",
+          "completed": false,
+          "line": 44
+        },
+        {
+          "text": "Deploy to staging",
+          "completed": false,
+          "line": 45
+        },
+        {
+          "text": "Integration testing",
+          "completed": false,
+          "line": 48
+        },
+        {
+          "text": "Performance testing",
+          "completed": false,
+          "line": 49
+        },
+        {
+          "text": "Security audit",
+          "completed": false,
+          "line": 50
+        },
+        {
+          "text": "Production deployment",
+          "completed": false,
+          "line": 51
+        },
+        {
+          "text": "Complete user authentication module",
+          "completed": false,
+          "line": 54
+        },
+        {
+          "text": "Implement data validation layer",
+          "completed": false,
+          "line": 55
+        },
+        {
+          "text": "Create API documentation",
+          "completed": false,
+          "line": 56
+        },
+        {
+          "text": "Setup CI/CD pipeline",
+          "completed": false,
+          "line": 57
+        }
+      ],
+      "codeBlocks": [
+        {
+          "language": "mermaid",
+          "line": 61,
+          "content": "graph TD\n    A[Client] --> B[API Gateway]\n    B --> C[FastAPI Backend]\n    C --> D[PostgreSQL]\n    C --> E[Redis Cache]\n    C --> F[S3 Storage]"
+        },
+        {
+          "language": "python",
+          "line": 73,
+          "content": "from fastapi import APIRouter, Depends, HTTPException\nfrom sqlalchemy.orm import Session\n\nrouter = APIRouter(prefix=\"/api/v1\")\n\n@router.get(\"/projects/{project_id}\")\nasync def get_project(\n    project_id: int,\n    db: Session = Depends(get_db),\n    current_user: User = Depends(get_current_user)\n):\n    project = db.query(Project).filter(Project.id == project_id).first()\n    if not project:\n        raise HTTPException(status_code=404, detail=\"Project not found\")\n    return project"
+        },
+        {
+          "language": "python",
+          "line": 91,
+          "content": "from sqlalchemy import Column, Integer, String, DateTime, ForeignKey\nfrom sqlalchemy.ext.declarative import declarative_base\n\nBase = declarative_base()\n\nclass Project(Base):\n    __tablename__ = \"projects\"\n    \n    id = Column(Integer, primary_key=True)\n    name = Column(String, nullable=False)\n    status = Column(String, default=\"planning\")\n    created_at = Column(DateTime, default=datetime.utcnow)\n    owner_id = Column(Integer, ForeignKey(\"users.id\"))"
+        }
+      ]
+    }
+  },
+  "tags": {
+    "daily": 1,
+    "work": 1,
+    "meeting": 1,
+    "daily-review": 1,
+    "project": 1,
+    "active": 1,
+    "python": 1,
+    "priority/high": 1,
+    "project-management": 1,
+    "roadmap": 1
+  },
+  "links": {
+    "note1.md": ["Projects/Project Alpha", "People/John Doe", "Resources/Meeting Templates"],
+    "note2.md": [
+      "John Doe",
+      "Jane Smith", 
+      "Bob Wilson",
+      "Resources/Python Guide",
+      "Meetings/2024-01-15 Project Sync",
+      "Meetings/2024-01-08 Architecture Review",
+      "Meetings/2024-01-01 Kickoff Meeting",
+      "Resources/API Design Guidelines",
+      "Resources/Python Best Practices",
+      "Resources/Testing Strategy",
+      "Projects/Project Beta",
+      "Projects/Legacy System Migration"
+    ]
+  },
+  "tasks": [
+    {
+      "path": "note1.md",
+      "text": "Morning meditation",
+      "completed": true,
+      "line": 13
+    },
+    {
+      "path": "note1.md",
+      "text": "Review calendar",
+      "completed": true,
+      "line": 14
+    },
+    {
+      "path": "note1.md",
+      "text": "Check emails",
+      "completed": true,
+      "line": 15
+    },
+    {
+      "path": "note1.md",
+      "text": "Review PR #123",
+      "completed": true,
+      "line": 18
+    },
+    {
+      "path": "note1.md",
+      "text": "Call client about requirements",
+      "completed": false,
+      "line": 19
+    },
+    {
+      "path": "note1.md",
+      "text": "Update project documentation",
+      "completed": false,
+      "line": 20
+    },
+    {
+      "path": "note1.md",
+      "text": "Prepare weekly report",
+      "completed": false,
+      "line": 21
+    },
+    {
+      "path": "note1.md",
+      "text": "Review requirements document",
+      "completed": false,
+      "line": 36
+    },
+    {
+      "path": "note1.md",
+      "text": "Prepare questions about scope",
+      "completed": false,
+      "line": 37
+    },
+    {
+      "path": "note1.md",
+      "text": "Confirm budget constraints",
+      "completed": false,
+      "line": 38
+    },
+    {
+      "path": "note2.md",
+      "text": "Requirements gathering",
+      "completed": true,
+      "line": 35
+    },
+    {
+      "path": "note2.md",
+      "text": "Technical design document",
+      "completed": true,
+      "line": 36
+    },
+    {
+      "path": "note2.md",
+      "text": "Architecture review",
+      "completed": true,
+      "line": 37
+    },
+    {
+      "path": "note2.md",
+      "text": "Setup development environment",
+      "completed": true,
+      "line": 40
+    },
+    {
+      "path": "note2.md",
+      "text": "Database schema design",
+      "completed": true,
+      "line": 41
+    },
+    {
+      "path": "note2.md",
+      "text": "Complete API design",
+      "completed": true,
+      "line": 42
+    },
+    {
+      "path": "note2.md",
+      "text": "Write unit tests",
+      "completed": false,
+      "line": 43
+    },
+    {
+      "path": "note2.md",
+      "text": "Implement core features",
+      "completed": false,
+      "line": 44
+    },
+    {
+      "path": "note2.md",
+      "text": "Deploy to staging",
+      "completed": false,
+      "line": 45
+    },
+    {
+      "path": "note2.md",
+      "text": "Integration testing",
+      "completed": false,
+      "line": 48
+    },
+    {
+      "path": "note2.md",
+      "text": "Performance testing",
+      "completed": false,
+      "line": 49
+    },
+    {
+      "path": "note2.md",
+      "text": "Security audit",
+      "completed": false,
+      "line": 50
+    },
+    {
+      "path": "note2.md",
+      "text": "Production deployment",
+      "completed": false,
+      "line": 51
+    },
+    {
+      "path": "note2.md",
+      "text": "Complete user authentication module",
+      "completed": false,
+      "line": 54
+    },
+    {
+      "path": "note2.md",
+      "text": "Implement data validation layer",
+      "completed": false,
+      "line": 55
+    },
+    {
+      "path": "note2.md",
+      "text": "Create API documentation",
+      "completed": false,
+      "line": 56
+    },
+    {
+      "path": "note2.md",
+      "text": "Setup CI/CD pipeline",
+      "completed": false,
+      "line": 57
+    }
+  ],
+  "codeBlocks": {
+    "python": 3,
+    "mermaid": 1
+  }
+}

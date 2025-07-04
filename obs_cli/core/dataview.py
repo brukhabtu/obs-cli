@@ -7,16 +7,19 @@ from typing import Dict, Any, Optional
 from datetime import datetime
 import time
 import hashlib
+from .cache import CacheManager
 
 
 class DataviewClient:
     """Client for reading Obsidian metadata from JSON database."""
     
-    def __init__(self, vault_path: Optional[str] = None):
+    def __init__(self, vault_path: Optional[str] = None, enable_cache: bool = True, cache_ttl: int = 300):
         """Initialize database client.
         
         Args:
             vault_path: Path to Obsidian vault. If not provided, will try to auto-detect.
+            enable_cache: Whether to enable query result caching
+            cache_ttl: Cache time-to-live in seconds
         """
         if vault_path:
             self.vault_path = Path(vault_path)
@@ -29,6 +32,10 @@ class DataviewClient:
                 raise ValueError("Could not auto-detect vault path. Please provide vault_path.")
         
         self.db_path = self.vault_path / ".obsidian/plugins/obsidian-dataview-bridge/metadata.json"
+        
+        # Initialize cache if enabled
+        self.cache_enabled = enable_cache
+        self.cache = CacheManager(ttl_seconds=cache_ttl) if enable_cache else None
         
     def _read_database(self) -> Dict[str, Any]:
         """Read the database file."""
@@ -52,6 +59,10 @@ class DataviewClient:
         if 'lastUpdated' in stats:
             last_updated = datetime.fromisoformat(stats['lastUpdated'].replace('Z', '+00:00'))
             stats['lastUpdatedHuman'] = last_updated.strftime('%Y-%m-%d %H:%M:%S')
+        
+        # Add cache stats if caching is enabled
+        if self.cache_enabled and self.cache:
+            stats['cache'] = self.cache.get_stats()
             
         return stats
     
@@ -67,6 +78,12 @@ class DataviewClient:
         Returns:
             Dictionary with query results or None if Dataview is not available
         """
+        # Check cache first if enabled
+        if self.cache_enabled and self.cache:
+            cache_key = self.cache._make_key(query, str(self.vault_path))
+            cached_result = self.cache.get(cache_key)
+            if cached_result is not None:
+                return cached_result
         db = self._read_database()
         
         # Check if Dataview is available
@@ -115,6 +132,10 @@ class DataviewClient:
             result = db.get('dataviewQueries', {}).get(query_id)
             
             if result and result.get('status') in ['success', 'error']:
+                # Cache successful results
+                if self.cache_enabled and self.cache and result.get('status') == 'success':
+                    cache_key = self.cache._make_key(query, str(self.vault_path))
+                    self.cache.set(cache_key, result)
                 return result
         
         # Timeout - return pending status
@@ -158,4 +179,9 @@ class DataviewClient:
         }
         
         self._write_database(db)
+        
+        # Also clear the in-memory cache if enabled
+        if self.cache_enabled and self.cache:
+            self.cache.clear()
+            
         return count
